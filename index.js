@@ -13,7 +13,7 @@ const username = process.env.MONGODB_USERNAME;
 const password = process.env.MONGODB_PASSWORD;
 mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.ojovtiw.mongodb.net/registrationFormDB`, {
     useNewUrlParser : true,
-    useUnifiedTopology : true,
+    useUnifiedTopology : true
 });
 
 const registrationSchema = new mongoose.Schema({
@@ -39,6 +39,12 @@ app.post("/register",async (req, res) => {
         const {name,email,password} = req.body;
         const existinguser = await Registration.findOne({email:email});
         if(existinguser){
+            console.log("user already exists");
+            res.redirect("/error");
+
+        }
+        else{
+
             const registrationData = new Registration({
                 name,
                 email,
@@ -46,11 +52,6 @@ app.post("/register",async (req, res) => {
             });
             await registrationData.save();
             res.redirect("/success");
-
-        }
-        else{
-            console.log("user already exists");
-            res.redirect("/error");
         }
     
 
@@ -60,16 +61,16 @@ app.post("/register",async (req, res) => {
         res.redirect("/error");
 
     }
-})
+});
 
 app.get("/success", (req,res)=>{
     res.sendFile (__dirname+"/pages/success.html");
-})
+});
 
 app.get("/error", (req,res)=>{
     res.sendFile(__dirname+"/pages/error.html");
-})
+});
 
 app.listen(port, ()=>{
     console.log(`Server is running on port ${port}`);
-})
+});
