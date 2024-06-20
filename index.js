@@ -13,7 +13,7 @@ const username = process.env.MONGODB_USERNAME;
 const password = process.env.MONGODB_PASSWORD;
 mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.ojovtiw.mongodb.net/registrationFormDB`, {
     useNewUrlParser : true,
-    useUnifiedTopology : true
+    useUnifiedTopology : true,
 });
 
 const registrationSchema = new mongoose.Schema({
@@ -37,7 +37,7 @@ app.get("/",(req,res) =>{
 app.post("/register",async (req, res) => {
     try{
         const {name,email,password} = req.body;
-        const existinguser = await Registration.findone({email:email});
+        const existinguser = await Registration.findOne({email:email});
         if(existinguser){
             const registrationData = new Registration({
                 name,
@@ -64,7 +64,7 @@ app.post("/register",async (req, res) => {
 
 app.get("/success", (req,res)=>{
     res.sendFile (__dirname+"/pages/success.html");
-});
+})
 
 app.get("/error", (req,res)=>{
     res.sendFile(__dirname+"/pages/error.html");
