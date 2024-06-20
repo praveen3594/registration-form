@@ -13,7 +13,7 @@ const username = process.env.MONGODB_USERNAME;
 const password = process.env.MONGODB_PASSWORD;
 mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.ojovtiw.mongodb.net/registrationFormDB`, {
     useNewUrlParser : true,
-    useUnifiedTopology : true,
+    useUnifiedTopology : true
 });
 
 const registrationSchema = new mongoose.Schema({
